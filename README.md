@@ -1,1 +1,1 @@
-# django-zabbix
+# django

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row p-5 mb-4 bg-light rounded-3">
+    <div class="col-md-8">
+        <div class="py-5">
+            <h1 class="display-6 fw-bold">{{ ticket.ticket_title }}</h1>
+            <p>{{ ticket.ticket_description }}</p>
+            <span class="badge bg-success">Active</span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="display-6">Informations rapides</h2>
+                <p>Voici quelques informations rapides sur ce ticket et le client que vous accompagne.</p>
+                <ul>
+                    <li><b>Identifiant unique du ticket :</b> {{ ticket.ticket_id }}</li>
+                    <li><b>Client :</b> {{ ticket.customer }}</li>
+                    <li><b>Ingénieur :</b> {{ ticket.engineer }}</li>
+                    <li><b>Créé le :</b>  {{ ticket.created_on|date:"d/m/Y" }}</li>
+                    <li><b>Sévérité :</b> {{ ticket.severity }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if ticket.is_resolved %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Resolution Steps</h5>
+        {{ ticket.resolution_steps }}
+    </div>
+</div>
+{% else %}
+    {% if request.user.is_engineer %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resolveTicketModal">Résoudre le Ticket</button>
+
+    <div class="modal fade" id="resolveTicketModal" tabindex="-1" aria-labelledby="resolveTicketModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resolveTicketModalLabel">Résolution du Ticket</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'resolve-ticket' ticket.ticket_id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Décrivez comment le problème a été résolu</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resolution_steps"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+
+{% endblock content %}

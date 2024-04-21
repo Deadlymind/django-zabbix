@@ -1,0 +1,81 @@
+{% extends 'accounts/base.html' %}
+
+{% block heading %}
+log in to Continue
+{% endblock heading %}
+
+{% block content %}
+
+<form classs="p-4 p-md-5 border rounded-3 bg-light" method="POST">
+    {% csrf_token %}
+    <div class="form-floating mb-3">
+        <input type="email" name="username" class="form-control" id="floatingInput">
+        <label for="floatingInput">email</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" name="password" class="form-control" id="floatingPassword">
+        <label for="floatingPassword">password</label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+    <hr class="my-4">
+    <small class="text-muted">Don't have an account? <a href="{% url 'register-customer' %}">Sign up</a></small>
+</form>
+{% endblock content %}
+<style>/* Add this to your styles.css */
+
+    /* Style for the form itself */
+    form.p-4.p-md-5.border.rounded-3.bg-light {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+    
+    /* Styling for input fields */
+    input.form-control {
+        border: 2px solid #ced4da;
+        border-radius: 0.25rem;
+        padding: 10px;
+    }
+    
+    input.form-control:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+    
+    /* Styling for the button */
+    button.btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 0.25rem;
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+    
+    button.btn-primary:hover {
+        background-color: #0056b3;
+    }
+    
+    /* Small text and link */
+    small.text-muted {
+        display: block;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+    
+    small.text-muted a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    
+    small.text-muted a:hover {
+        text-decoration: underline;
+    }
+    </style>
+
+
+
+
+
+
+

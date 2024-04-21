@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="title">
+            <h2>GPI</h2>
+        </div>
+        <div class="user">
+            <figure class="avatar">
+                <img src="{% static 'assets/logogpi.png' %}" alt="GPI Logo">
+            </figure>
+        </div>
+    </header>
+    <!-- ASIDE -->
+    <aside class="aside">
+        <ul class="aside-menu">
+            <li class="aside-menu-item">
+                <div class="icon-box">
+                    <i class="bx bx-home"></i>
+                </div>
+            </li>
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_customer %}
+                    <li class="aside-menu-item">
+                        <a href="{% url 'customer_dashboard' %}">
+                            <div class="icon-box">
+                                <i class="bx bx-user-circle" style="color: white;"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% elif request.user.is_engineer %}
+                    <li class="aside-menu-item">
+                        <a href="{% url 'engineer_dashboard' %}">
+                            <div class="icon-box">
+                                <i class="bx bx-calendar"></i>
+                            </div>
+                        </a>
+                        <a href="{% url 'index' %}">
+                            <div class="icon-box">
+                                <i class="bx bx-time"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% elif request.user.is_admin %}
+                    <li class="aside-menu-item">
+                        <a href="{% url 'admin_dashboard' %}">
+                            <div class="icon-box">
+                                <i class="bx bx-time"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="aside-menu-item">
+                    <a href="{% url 'logout' %}">
+                        <div class="icon-box">
+                            <i class="bx bx-power-off" style="color: white;"></i>
+                        </div>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </aside>
+
+<!-- MAIN -->
+<main class="main">
+    <div class="wrapper">
+        <div class="hero">
+            <div class="hero-heading">
+                <h3>Your Projects</h3>
+            </div>
+            <div class="hero-search">
+                <div class="input-group">
+                    <input type="text" placeholder="Search Projects">
+                    <i class="bx bx-search"></i>
+                </div>
+                <button class="filter-button">
+                    Filter<i class="bx bx-filter-alt"></i>
+                </button>
+            </div>
+        </div>
+        <div class="project-grid">
+            <!-- Project cards added dynamically -->
+        </div>
+        <div class="chat-section">
+            <h5>Client Messages</h5>
+            <!-- Messages -->
+        </div>
+    </div>
+</main>
+
+<!-- Tilt -->
+<div class="container mt-5">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.4.1/vanilla-tilt.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

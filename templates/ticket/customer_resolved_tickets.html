@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <section class="row row-cols-1 row-cols-md-4 g-4">
+        {% if tickets %}
+            {% for ticket in tickets %}
+            <article class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ticket.ticket_title }} <br> #{{ ticket.ticket_id }}</h5>
+                        <p class="card-text">
+                            {% if ticket.status == 'Pending' %}
+                            <span class="badge bg-danger">Pending</span>
+                            {% elif ticket.status == 'Active' %}
+                            <span class="badge bg-warning">Active</span>
+                            {% elif ticket.status == 'Resolved' %}
+                            <span class="badge bg-success">Resolved</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <a href="{% url 'ticket-details' ticket.ticket_id %}" class="btn btn-primary btn-sm" aria-label="View details for Ticket #{{ ticket.ticket_id }}">
+                        View Details
+                    </a>
+                    <div class="card-footer">
+                        <small class="text-muted">Created {{ ticket.created_on|naturaltime }}</small>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="col">
+                <div class="alert alert-info" role="alert">
+                    No tickets available to display.
+                </div>
+            </div>
+        {% endif %}
+    </section>
+</div>
+
+{% endblock content %}
