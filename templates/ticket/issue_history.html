@@ -1,52 +1,43 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% block content %} <!-- Début du block content -->
 
-{% block content %} <!-- Start of content block -->
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-body">
-      <table class="table table-responsive">
-        <thead>
+<div class="card" style="width: 76rem;">
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID ticket</th>
+          <th scope="col">Titre du ticket</th>
+          <th scope="col">Client</th>
+          <th scope="col">Date créée</th>
+          <th scope="col">Statut</th> <!-- Ajouté pour afficher le statut -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for ticket in tickets %}
           <tr>
-            <th scope="col">ID ticket</th>
-            <th scope="col">Titre du ticket</th>
-            <th scope="col">Client</th>
-            <th scope="col">Date créée</th>
-            <th scope="col">Statut</th>
-            <th scope="col">Actions</th> <!-- Column for actions -->
+            <td>{{ ticket.id }}</td>
+            <td>{{ ticket.ticket_title }}</td>
+            <td>{{ ticket.customer }}</td>
+            <td>{{ ticket.created_on|date:"d/m/Y" }}</td> <!-- Utilisation de |date pour formater la date -->
+            <td>
+              {% if ticket.status == 'Pending' %}
+                <span class="badge bg-danger">Pending</span>
+              {% elif ticket.status == 'Active' %}
+                <span class="badge bg-warning">Active</span>
+              {% elif ticket.status == 'Resolved' %}
+                <span class="badge bg-success">Resolved</span>
+              {% endif %}
+            </td>
+            <td>
+              <!-- Placez ici les actions possibles pour chaque ticket -->
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {% if tickets %}
-            {% for ticket in tickets %}
-            <tr>
-              <th scope="row">{{ ticket.id }}</th>
-              <td>{{ ticket.ticket_title }}</td>
-              <td>{{ ticket.customer }}</td>
-              <td>{{ ticket.created_on|date:"d/m/Y" }}</td>
-              <td>
-                {% if ticket.status == 'Pending' %}
-                  <span class="badge bg-danger">Pending</span>
-                {% elif ticket.status == 'Active' %}
-                  <span class="badge bg-warning">Active</span>
-                {% elif ticket.status == 'Resolved' %}
-                  <span class="badge bg-success">Resolved</span>
-                {% endif %}
-              </td>
-              <td>
-                <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-primary btn-sm">Edit</a>
-                <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
-              </td>
-            </tr>
-            {% endfor %}
-          {% else %}
-            <tr>
-              <td colspan="6" class="text-center">No tickets available to display.</td>
-            </tr>
-          {% endif %}
-        </tbody>
-      </table>
-    </div>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
+
 {% endblock content %}

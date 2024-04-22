@@ -2,26 +2,32 @@
 {% load static %}
 {% load widget_tweaks %}
 
+
 {% block content %}
+
+
+
 <div class="container col-xl-12 col-xxl-10 px-4 py-5">
     <div class="row align-items-center g-lg-5 py-5">
-        <div class="col-lg-6 text-center text-lg-start">
+        <div class="col-lg-6 text-center text-lg-start"> 
             <div class="h-100">
-                <img src="{% static 'assets/support.png' %}" class="card-img-top" alt="Support Image">
+                <img src="{% static 'assets/support.png' %}" class="card-img-top" alt="">
             </div>
-        </div>
+    </div>
 
-        <div class="col-md-10 mx-auto col-lg-6">
-            <h2 class="display-6 fw-bold 1h-1 mb-3 text-center">{{ ticket.ticket_title }}</h2>
-            <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST">
-                {% csrf_token %}
-                <div class="form-floating mb-3">
-                    {% render_field form.engineer class="form-control" id="engineer" %}
-                    <label for="engineer">Engineer</label>
+    <div class="col-md-10 mx-auto col-lg-6">
+        <h2 class="display-6 fw-bold 1h-1 mb-3 text-center">{{ticket.ticket_title}}</h2>
+        <form class="p-4 p-md-5 border rounded-3 bg-dark" method="POST">
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+                {% render_field form.engineer class="form-control" %}
+                <label for="floatingInput">Engineer</label>
                 </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
-            </form>
-        </div>
+               
+                
+                <button class="w-100 btn btn-lg btn-primary" type="submit">submit</button>
+        </form>
     </div>
 </div>
+
 {% endblock content %}

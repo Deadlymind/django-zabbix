@@ -10,16 +10,18 @@
   {% else %}
     <div class="row justify-content-center">
       <div class="col-6">
-        <div class="card bg-light mb-3">
+        <div class="card bg-dark mb-3">
           <div class="card-header">
-            <i class="fa-solid fa-address-card fa-lg"></i> materiels Registration
+            <i class="fa-solid fa-address-card fa-lg"></i> Materiels Registration
           </div>
-          <div class="card-body">
-            <form action="{% url 'add' %}" method="POST">
+          <div class="card-body bg-dark">
+            <form action="{% url 'add' %}" method="POST" aria-label="Materiels Registration Form">
               {% csrf_token %}
               {{ form.as_p }}
-              <button type="submit" class="btn btn-primary">Add</button>
-              <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-primary" aria-label="Add new materiel">Add</button>
+                <a href="{% url 'index' %}" class="btn btn-secondary" aria-label="Cancel and return to home page">Cancel</a>
+              </div>
             </form>
           </div>
         </div>

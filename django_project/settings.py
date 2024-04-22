@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'dashboard',
     'ticket',
 
+
+    'django_extensions',
     'widget_tweaks',
     'materiels',
 ]
@@ -136,3 +138,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+GRAPH_MODELS = {
+  'all_applications': False,
+  'group_models': True,
+}

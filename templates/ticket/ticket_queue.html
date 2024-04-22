@@ -1,40 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
-  <div class="card">
+<div class="card">
     <div class="card-body">
-      <table class="table table-responsive">
-        <thead>
-          <tr>
-            <th scope="col">ID ticket</th>
-            <th scope="col">Titre du ticket</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Date créée</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% if tickets %}
-            {% for ticket in tickets %}
-            <tr>
-              <td><a href="{% url 'ticket-details' ticket.ticket_id %}">{{ ticket.ticket_id }}</a></td>
-              <td>{{ ticket.ticket_title }}</td>
-              <td>{{ ticket.customer }}</td>
-              <td>{{ ticket.created_on|date:"d/m/Y" }}</td>
-              <td>
-                <a href="{% url 'assign-ticket' ticket.ticket_id %}" class="btn btn-outline-primary btn-sm">Attribuer à l'ingénieur</a>
-              </td>
-            </tr>
-            {% endfor %}
-          {% else %}
-            <tr>
-              <td colspan="5" class="text-center">Aucun ticket disponible.</td>
-            </tr>
-          {% endif %}
-        </tbody>
-      </table>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID ticket</th>
+                <th scope="col">Titre du ticket</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Date créée</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+              <tr>
+                <td><a href="{% url 'ticket-details' ticket.ticket_id %}">{{ticket.ticket_id}}</a></td>
+                <td>{{ticket.ticket_title}}</td>
+                <td>{{ticket.customer}}</td>
+                <td>{{ticket.created_on}}</td>
+                <td><a href="{% url 'assign-ticket' ticket.ticket_id %}" class="btn btn-outline-primary btn-sm">Attribuer à l'ingénieur</a></td>
+               
+         
+             
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
     </div>
   </div>
-</div>
-{% endblock content %}
+{% endblock content %}  
